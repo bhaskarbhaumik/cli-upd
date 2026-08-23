@@ -1,0 +1,56 @@
+[project]
+name = "upd"
+version = "0.1.0"
+description = "A rich, parallel, multi-level updater for Apple Silicon macOS — system and userspace."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.12"
+authors = [
+    { name = "Bhaskar Bhaumik", email = "4145672+bhaskarbhaumik@users.noreply.github.com" },
+]
+keywords = ["macos", "apple-silicon", "updater", "homebrew", "cli", "rich"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Intended Audience :: System Administrators",
+    "Operating System :: MacOS :: MacOS X",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: System :: Software Distribution",
+    "Topic :: Utilities",
+]
+dependencies = [
+    "rich>=13.7",
+    "rich-argparse-plus>=0.3.1.4",
+]
+
+[project.urls]
+Homepage = "https://github.com/bhaskarbhaumik/upd"
+Repository = "https://github.com/bhaskarbhaumik/upd"
+Issues = "https://github.com/bhaskarbhaumik/upd/issues"
+
+[project.scripts]
+upd = "upd.cli:main"
+
+[build-system]
+requires = ["uv_build>=0.12.5,<0.13.0"]
+build-backend = "uv_build"
+
+[tool.uv.build-backend]
+module-name = "upd"
+module-root = "src"
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+src = ["src"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "C4", "SIM", "RUF"]
+ignore = ["E501", "UP042"]
+
+[tool.ruff.lint.isort]
+force-single-line = false
+combine-as-imports = true

@@ -1,0 +1,1 @@
+command -v gcloud &>/dev/null && gcloud -q components update

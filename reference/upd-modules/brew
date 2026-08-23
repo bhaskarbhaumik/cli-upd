@@ -1,0 +1,16 @@
+if command -v brew &>/dev/null; then
+    # brew analytics off
+
+    print_header "🍺 Fetch the newest version of Homebrew and all formulae  [bright_green]\uf0ed[/bright_green]"
+    brew update --verbose
+
+    print_header "🍺 Upgrade  \U000f0074 [yellow]outdated casks[/yellow]  and  \U000f0fc [yellow]outdated, unpinned formulae[/yellow]  [bright_green]\U000f03d5[/bright_green]"
+    brew upgrade --greedy --verbose
+
+    print_header "🍺 Remove stale lock files and outdated downloads  [bright_green]\U000f00e2[/bright_green]"
+    brew cleanup --prune=all --scrub --verbose
+
+    print_header "🍺 Check your system for potential problems  [bright_green]\uf0f0[/bright_green]"
+    brew doctor
+    # brew analytics on
+fi

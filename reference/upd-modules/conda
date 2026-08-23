@@ -1,0 +1,39 @@
+#!/usr/bin/env zsh
+
+# Check if conda is installed
+if command -v conda &>/dev/null; then
+    conda deactivate &>/dev/null
+    conda_exe="${HOME}/opt/miniforge3/bin/conda"
+    # List all conda environments; and loop through package update for all environments
+    for env in $("${conda_exe}" env list 2>/dev/null | gawk '/^\s*[^#].*$/ {print $1}' 2>/dev/null); do
+        print_header "[dim green]\ue606[/dim green] Updating conda environment: [b]${env}[/b]"
+
+        print_rule "[dim cyan]\U000f14d0[/dim cyan] Activate conda environment: [b white]${env}"
+        "${conda_exe}" activate ${env} &>/dev/null
+
+        print_rule "[dim cyan]\U000f14d0[/dim cyan] Information on conda environment: [b white]${env}"
+        "${conda_exe}" info
+
+        print_rule "[dim cyan]\U000f0a2b[/dim cyan] Update [b white]conda base"
+        "${conda_exe}" update -qy -n ${env} conda 2>&1
+
+        print_rule "[dim cyan]\U000f0495[/dim cyan] Update conda [b white]packages"
+        "${conda_exe}" update -qy -n ${env} --all 2>&1
+
+        print_rule "[dim cyan]\U000f0495[/dim cyan] Update pip [b white]packages"
+        pip install --upgrade pip 2>&1
+        pip install $(pip list --outdated --format=columns | awk 'NR>2 {print $1"=="$3}') 2>&1
+
+        print_rule "[dim cyan]\U000f00e2[/dim cyan] Clean conda environment: [b white]${env}"
+        "${conda_exe}" clean -qy --all 2>&1
+
+        print_rule "[dim red]\U000f14d2[/dim red] Dectivate conda environment: [b white]${env}"
+        "${conda_exe}" deactivate &>/dev/null
+    done
+else
+    echo "conda is not installed"
+fi
+
+# Using Proxy Servers with conda
+# conda config --set proxy_servers.http http://bbmbp.client.home
+# conda config --set proxy_servers.https https://bbmbp.client.home
