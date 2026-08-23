@@ -7,7 +7,7 @@ from collections.abc import Iterator
 from pathlib import Path
 
 from upd.context import Context
-from upd.registry import TAG_GREEDY, TAG_SLOW, Step, StepList, have, module, which
+from upd.registry import TAG_SLOW, Step, StepList, have, module, which
 
 
 def _is_brewed(exe: str) -> bool:
@@ -414,7 +414,9 @@ def ollama(ctx: Context) -> Iterator[Step]:
         '| while IFS= read -r m; do [ -n "$m" ] && echo "→ $m" && ollama pull "$m"; done',
         allow_fail=True,
         timeout=21600,
-        tags=frozenset({TAG_SLOW, TAG_GREEDY}),
+        # The module is already opt-in; gating the pull behind --greedy too
+        # would mean `upd pkg ollama` did nothing.
+        tags=frozenset({TAG_SLOW}),
     )
     return iter(s)
 
