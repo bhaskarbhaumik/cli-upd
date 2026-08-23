@@ -34,7 +34,9 @@ INSTALLED      := $(DESTDIR)/$(NAME)
 GH             ?= gh
 GIT            ?= git
 GH_OWNER       ?= $(shell $(GH) api user -q .login 2>/dev/null)
-REPO           ?= $(NAME)
+#  The repo is named for the workspace directory, not the binary: the
+#  installed command is `upd`, the checkout and the repo are `cli-upd`.
+REPO           ?= cli-upd
 REPO_SLUG      := $(GH_OWNER)/$(REPO)
 VISIBILITY     ?= private
 BRANCH         ?= main

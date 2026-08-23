@@ -46,8 +46,8 @@ terminal stays readable without losing anything.
 Requires [uv](https://docs.astral.sh/uv/) and macOS on Apple Silicon.
 
 ```bash
-git clone git@github.com:bhaskarbhaumik/upd.git
-cd upd
+git clone git@github.com:bhaskarbhaumik/cli-upd.git
+cd cli-upd
 make install                     # → ~/.local/bin/upd
 make install DESTDIR=/usr/local/bin   # anywhere else
 ```
